@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encriptador de texto</title>
+    <link rel="stylesheet" href="style.css">
+    <body>
+        <header>
+            <img src = "imagenes/Logo.svg".alt="logo Alura">
+        </header>
+        <main>
+            <form class="form__section">
+                <textarea class="form__input" name="mensaje" id="" cols ="30" rows="10" placeholder="Ingrese el Texto aqui"></textarea>
+                <div class="btn__container">
+                    <div class="alert__msj"><img src="imagenes/Frame 8.svg" alt="alert Frame 8"><span></div>
+                </div>
+                <div class="submit__container">
+                    <input class="form__btn" type= "submit" value="Encriptar">
+                    <input class="form__btn form__btn--secundary" type= "submit" value="Desencriptar">
+                </div>
+            </form>
+            <aside class="result">
+                <img src="imagenes/Muñeco.png" alt="imagen de Muñeco" class="result__img">
+                <div class="result__container">
+                    <h3 class="result_title">Ningún mensaje fue encontrado</h3>
+                    <p class="result_text">Ingresa el texto que desees encriptar o desencriptar.</p>
+                    <button class="form__btn form__btn--secundary hidden">Copiar</button>
+                </div>
+            </aside>
+    </main>
+</body>
+</script>
+    <script>
+        const textInput = document.getElementById('text');
+        const optionSelect = document.getElementById('option');
+        const submitButton = document.getElementById('submit');
+        const copyButton = document.getElementById('copy');
+        const resultDiv = document.getElementById('result');
+
+        const encryptionMap = {
+            'e': 'enter',
+            'i': 'imes',
+            'a': 'ai',
+            'o': 'ober',
+            'u': 'ufat'
+        };
+
+        const decryptionMap = {};
+        for (const key in encryptionMap) {
+            decryptionMap[encryptionMap[key]] = key;
+        }
+
+        submitButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            const text = textInput.value.toLowerCase();
+            const option = optionSelect.value;
+
+            let result;
+            if (option === 'encrypt') {
+            result = encryptText(text);
+            } else {
+                result = decryptText(text);
+            }
+
+            resultDiv.innerText = result;
+        });
+
+        copyButton.addEventListener('click', () => {
+            const resultText = resultDiv.innerText;
+            navigator.clipboard.writeText(resultText);
+        });
+
+        function encryptText(text) {
+            return text.replace(/[eiaou]/g, (match) => encryptionMap[match]);
+        }
+
+    function decryptText(text) {
+        return text.replace(/(enter|imes|ai|ober|ufat)/g, (match) => decryptionMap[match]);
+    }
+</script>
+<body>
+<!-- contenido del cuerpo -->
+<script src="Script.js"></script>
+</body>
+</html>
